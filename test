@@ -1,0 +1,24 @@
+import yfinance as yf
+import pandas as pd
+import matplotlib.pyplot as plt
+
+def download_stock_data(symbols, start_date, end_date):
+    data = yf.download(symbols, start=start_date, end=end_date)['Adj Close']
+    return data
+
+def plot_adj_close_prices(adj_close_data, symbols):
+    for symbol in symbols:
+        plt.plot(adj_close_data.index, adj_close_data[symbol], label=symbol)
+
+    plt.title('Adjusted Close Prices Over Time')
+    plt.xlabel('Date')
+    plt.ylabel('Adjusted Close Price')
+    plt.legend()
+    plt.show()
+
+if __name__ == "__main__":
+    stocks = ["AAPL", "GOOGL", "MSFT"]
+    start_date = "2022-01-01"
+    end_date = "2023-01-01"
+    stock_data = download_stock_data(stocks, start_date, end_date)
+    plot_adj_close_prices(stock_data, stocks)
